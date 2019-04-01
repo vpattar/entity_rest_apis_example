@@ -1,6 +1,5 @@
 package com.hp.assignment.model;
 
-import java.math.BigInteger;
 import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name= "asset")
+@Table(name= "assets")
 public class AssetEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

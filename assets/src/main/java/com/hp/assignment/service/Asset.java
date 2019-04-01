@@ -20,11 +20,6 @@ public class Asset {
 
     public Asset() {
     }
-    
-    public static Asset fromAssetsEntity() {
-    	Asset as = new Asset();
-    	return as;
-    }
 
 	public Integer getId() {
 		return id;

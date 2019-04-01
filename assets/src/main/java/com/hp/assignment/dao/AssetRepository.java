@@ -19,7 +19,7 @@ public interface AssetRepository extends JpaRepository<AssetEntity, Integer> {
 	void deleteById(Id id);
 	Page<AssetEntity> findAll(Pageable pageable);
 	
-	 @Query(value = "SELECT * FROM asset WHERE name like %?1%",
+	 @Query(value = "SELECT * FROM assets WHERE name like %?1%",
 			    nativeQuery = true)
 	Page<AssetEntity> findName(String name, Pageable pageable);
 	
