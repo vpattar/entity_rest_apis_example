@@ -12,4 +12,5 @@ public interface AssetProviderService {
 	void editAssets(Asset asset);
 	void deleteAssetsById(Integer assetId);
 	Page<Asset> listAllByPage(Pageable pageable);
+	Page<Asset> listNameByPage(String name, Pageable pageable);
 }

@@ -38,11 +38,17 @@ public class AssetProviderServiceImpl implements AssetProviderService {
 		//Log
 		this.asDao.deleteById(assetId);
 	}
-
+	/*
+	 * TODO: This is not used, still keeping it as this is just test exercise.
+	 */
 	@Override
 	public Page<Asset> listAllByPage(Pageable pageable) {
-		// TODO Auto-generated method stub
 		return AssetsMapperUtility.mapEntityPageIntoDTOPage(pageable, this.asDao.findAll(pageable));
 	}
-	
+
+	@Override
+	public Page<Asset> listNameByPage(String name, Pageable pageable) {
+		return AssetsMapperUtility.mapEntityPageIntoDTOPage(pageable, this.asDao.findName(name, pageable));
+	}
+
 }

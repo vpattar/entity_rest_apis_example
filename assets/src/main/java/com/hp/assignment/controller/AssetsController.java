@@ -32,9 +32,9 @@ public class AssetsController {
 //        return this.assetProviderService.getAssets();
 //    }
     
-    @RequestMapping(value="/list",method=RequestMethod.GET)
-	Page<Asset> list( Pageable pageable){
-		Page<Asset> assets = assetProviderService.listAllByPage(pageable);
+    @RequestMapping(method=RequestMethod.GET)
+	Page<Asset> list(@RequestParam("name") String name, Pageable pageable){
+		Page<Asset> assets = assetProviderService.listNameByPage(name, pageable);
 		return assets;
 	}
     
