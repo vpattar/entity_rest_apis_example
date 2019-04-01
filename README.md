@@ -8,7 +8,7 @@ This is a sample assignment that provides APIs for CRUD operations on tables.
 #### gradle bootRun
 
 ## To Be Done:
-### Add trelationships across different entities
+### Add relationships across different entities
 ### Add null validations
 ### Junits
 ### Swagger
