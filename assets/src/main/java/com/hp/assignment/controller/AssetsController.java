@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hp.assignment.service.AssetProviderService;
-import com.hp.assignment.service.Asset;
+import com.hp.assignment.domain.Asset;
 
 @RestController
 @RequestMapping("/assets")

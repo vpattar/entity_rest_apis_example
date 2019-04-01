@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.hp.assignment.domain.Asset;
+
 public interface AssetProviderService {
 
 	void addAsset(Asset asset);

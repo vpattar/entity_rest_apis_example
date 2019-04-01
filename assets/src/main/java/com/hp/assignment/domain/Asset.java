@@ -1,21 +1,42 @@
-package com.hp.assignment.service;
+package com.hp.assignment.domain;
 
 import java.sql.Date;
+
+import javax.validation.constraints.NotNull;
 
 public class Asset {
 
     private Integer id;
+    
+	@NotNull(message = "Name cannot be null")
     private String name;
+	
+	@NotNull(message = "Brand cannot be null")
     private String brand;
+	
+	@NotNull(message = "Model cannot be null")
     private String model;
+	
+	@NotNull(message = "Serial Number cannot be null")
     private String serial_number;
+	
+	@NotNull(message = "Type cannot be null")
     private String type;
+	
+	@NotNull(message = "Acquisition cannot be null")
     private Date acquisition;
+	
+	@NotNull(message = "Warranty Expiration cannot be null")
     private Date warranty_expiration;
+	
     private Integer owner_id;
     private Integer user_id;
     private Integer asset_id;
+    
+    @NotNull(message = "Retired cannot be null")
     private Boolean retired;
+    
+    @NotNull(message = "Cost cannot be null")
     private Integer cost;
 
     public Asset() {

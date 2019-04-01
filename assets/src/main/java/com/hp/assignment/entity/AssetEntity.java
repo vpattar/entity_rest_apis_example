@@ -1,11 +1,15 @@
-package com.hp.assignment.model;
+package com.hp.assignment.entity;
 
 import java.sql.Date;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name= "assets")
@@ -13,17 +17,45 @@ public class AssetEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+	
+	@NotNull(message = "Name cannot be null")
     private String name;
-    private String brand;
+    
+	@NotNull(message = "Brand cannot be null")
+	private String brand;
+	
+	@NotNull(message = "Model cannot be null")
     private String model;
+	
+	@NotNull(message = "Serial Number cannot be null")
     private String serial_number;
+	
+	@NotNull(message = "Type cannot be null")
     private String type;
+	
+	@NotNull(message = "Acquisition cannot be null")
     private Date acquisition;
+	
+	@NotNull(message = "Warranty Expiration cannot be null")
     private Date warranty_expiration;
-    private Integer owner_id;
-    private Integer user_id;
-    private Integer asset_id;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    private OrganizationEntity organization;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+    
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "asset_id")
+    private AssetEntity parentAsset;
+
+    @NotNull(message = "Retired cannot be null")
     private Boolean retired;
+    
+    @NotNull(message = "Cost cannot be null")
     private Integer cost;
 
     public AssetEntity() {
@@ -93,28 +125,28 @@ public class AssetEntity {
 		this.warranty_expiration = warranty_expiration;
 	}
 
-	public Integer getOwner_id() {
-		return owner_id;
+	public OrganizationEntity getOrganization() {
+		return organization;
 	}
 
-	public void setOwner_id(Integer owner_id) {
-		this.owner_id = owner_id;
+	public void setOrganization(OrganizationEntity organization) {
+		this.organization = organization;
 	}
 
-	public Integer getUser_id() {
-		return user_id;
+	public UserEntity getUser() {
+		return user;
 	}
 
-	public void setUser_id(Integer user_id) {
-		this.user_id = user_id;
+	public void setUser(UserEntity user) {
+		this.user = user;
 	}
 
-	public Integer getAsset_id() {
-		return asset_id;
+	public AssetEntity getParentAsset() {
+		return parentAsset;
 	}
 
-	public void setAsset_id(Integer asset_id) {
-		this.asset_id = asset_id;
+	public void setParentAsset(AssetEntity parentAsset) {
+		this.parentAsset = parentAsset;
 	}
 
 	public Boolean getRetired() {

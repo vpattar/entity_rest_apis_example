@@ -8,9 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import com.hp.assignment.model.AssetEntity;
+import com.hp.assignment.domain.Asset;
+import com.hp.assignment.entity.AssetEntity;
+import com.hp.assignment.entity.OrganizationEntity;
+import com.hp.assignment.entity.UserEntity;
 
-public class AssetsMapperUtility {
+public interface AssetsMapperUtility {
 
 	
 	// Can use mapper like dozer mapper, but since this is simple object doing it in code
@@ -25,9 +28,15 @@ public class AssetsMapperUtility {
 		entity.setType(asset.getType());
 		entity.setAcquisition(asset.getAcquisition());
 		entity.setWarranty_expiration(asset.getWarranty_expiration());
-		entity.setOwner_id(asset.getOwner_id());
-		entity.setUser_id(asset.getUser_id());
-		entity.setAsset_id(asset.getAsset_id());
+		AssetEntity parentAsset = new AssetEntity();
+		parentAsset.setId(asset.getAsset_id());
+		entity.setParentAsset(parentAsset);
+		UserEntity userEntity = new UserEntity();
+		userEntity.setId(asset.getUser_id());
+		entity.setUser(userEntity);
+		OrganizationEntity orgEntity = new OrganizationEntity();
+		orgEntity.setId(asset.getOwner_id());
+		entity.setOrganization(orgEntity);
 		entity.setRetired(asset.getRetired());
 		entity.setCost(asset.getCost());
 		
@@ -44,9 +53,9 @@ public class AssetsMapperUtility {
 		asset.setType(entity.getType());
 		asset.setAcquisition(entity.getAcquisition());
 		asset.setWarranty_expiration(entity.getWarranty_expiration());
-		asset.setOwner_id(entity.getOwner_id());
-		asset.setUser_id(entity.getUser_id());
-		asset.setAsset_id(entity.getAsset_id());
+		asset.setOwner_id(entity.getParentAsset().getId());
+		asset.setUser_id(entity.getUser().getId());
+		asset.setAsset_id(entity.getOrganization().getId());
 		asset.setRetired(entity.getRetired());
 		asset.setCost(entity.getCost());
 
@@ -57,10 +66,7 @@ public class AssetsMapperUtility {
 	//TODO: Find a better way to do this
 	public static List<Asset> fromEntityToAsset(List<AssetEntity> assetEntities) {
 		List<Asset> assetsList = new LinkedList<Asset>();
-		for(AssetEntity entity : assetEntities) {
-			assetsList.add(fromEntityToAsset(entity));
-		}
-		
+		assetEntities.forEach(entity->assetsList.add(fromEntityToAsset(entity)));
 		return assetsList;
 	}
 	

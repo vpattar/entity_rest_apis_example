@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.hp.assignment.dao.AssetRepository;
+import com.hp.assignment.domain.Asset;
 
 @Service
 public class AssetProviderServiceImpl implements AssetProviderService {
