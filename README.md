@@ -6,9 +6,11 @@ This is a sample assignment that provides APIs for CRUD operations on table.
 #### Update the data base properties in application.properties.
 #### gradle bootRun
 
+## swagger dcumentation can be accessed at:
+http://localhost:8080/swagger-ui.html
+
 ## To Be Done:
 ### Junits
 ### Logging
-### Swagger
 ### Documentation/comments
 ### Additional Instructions
