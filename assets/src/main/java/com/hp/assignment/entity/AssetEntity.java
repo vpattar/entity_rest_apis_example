@@ -30,6 +30,7 @@ public class AssetEntity {
 	@NotNull(message = "Serial Number cannot be null")
     private String serial_number;
 	
+	//TODO: Ideally this should be an Enum, will update this as enum later
 	@NotNull(message = "Type cannot be null")
     private String type;
 	
