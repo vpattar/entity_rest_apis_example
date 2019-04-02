@@ -1,20 +1,14 @@
 ## hp_assignment
-This is a sample assignment that provides APIs for CRUD operations on tables.
+This is a sample assignment that provides APIs for CRUD operations on table.
 
 
 ## Instructions to run:
 #### Update the data base properties in application.properties.
-#### gradle --refresh-dependencies
 #### gradle bootRun
 
 ## To Be Done:
-### Add relationships across different entities
-### Add null validations
 ### Junits
-### Swagger
 ### Logging
+### Swagger
 ### Documentation/comments
-### Iinstructions
-
-
-
+### Additional Instructions
