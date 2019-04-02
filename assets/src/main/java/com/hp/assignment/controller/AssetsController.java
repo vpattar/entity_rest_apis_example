@@ -50,9 +50,9 @@ public class AssetsController {
 	 * @return
 	 */
     @RequestMapping(method=RequestMethod.GET)
-    Page<Asset> listAssets(@RequestParam("name") String name, Pageable pageable){
+    ResponseEntity<Page<Asset>> listAssets(@RequestParam("name") String name, Pageable pageable){
 		Page<Asset> assets = assetProviderService.listNameByPage(name, pageable);
-		return assets;
+		return new ResponseEntity<Page<Asset>> (assets, HttpStatus.OK);
 	}
     
     
@@ -63,11 +63,13 @@ public class AssetsController {
      *  		Ideally should have been through controller advice, but keeping it simple. 
      */
     @RequestMapping(method = RequestMethod.POST)
-    public void addAssets(@RequestBody Asset asset) throws Exception {
+    public ResponseEntity<HttpStatus> addAssets(@RequestBody Asset asset) throws Exception {
     	if (asset.getId() != null) {
     		throw new InvalidInputException("Id is not required to be set");
     	}
         this.assetProviderService.addAsset(asset);
+        
+        return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
     }
      /**
       * 
@@ -76,11 +78,13 @@ public class AssetsController {
       *  		Ideally should have been through controller advice, but keeping it simple. 
       */
     @RequestMapping(method = RequestMethod.PUT)
-    public void editAssets(@RequestBody Asset asset) throws Exception {
+    public ResponseEntity<HttpStatus> editAssets(@RequestBody Asset asset) throws Exception {
     	if (asset.getId() == null) {
     		throw new InvalidInputException("Id is required for edit");
     	}
         this.assetProviderService.addAsset(asset);
+        
+        return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
     }
     
     /**
@@ -89,8 +93,9 @@ public class AssetsController {
      * @throws Exception
      */
     @RequestMapping(value={"/{assetId}"}, method = RequestMethod.DELETE)
-    public void editAssets(@PathVariable Integer assetId) throws Exception {
+    public ResponseEntity<HttpStatus> editAssets(@PathVariable Integer assetId) throws Exception {
     	this.assetProviderService.deleteAssetsById(assetId);
+    	return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
     }
     
     

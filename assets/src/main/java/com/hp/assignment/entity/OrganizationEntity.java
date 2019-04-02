@@ -3,6 +3,7 @@ package com.hp.assignment.entity;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -26,10 +27,10 @@ public class OrganizationEntity {
     private String address;
     
     @OneToMany(cascade=CascadeType.ALL, mappedBy="organization")
-    private List<UserEntity> users;
+    private Set<UserEntity> users;
     
     @OneToMany(cascade=CascadeType.ALL, mappedBy="organization")
-    private List<AssetEntity> assets;
+    private Set<AssetEntity> assets;
  
     
     public OrganizationEntity() {
@@ -59,19 +60,19 @@ public class OrganizationEntity {
 		this.address = address;
 	}
 
-	public List<UserEntity> getUsers() {
+	public Set<UserEntity> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<UserEntity> users) {
+	public void setUsers(Set<UserEntity> users) {
 		this.users = users;
 	}
 
-	public List<AssetEntity> getAssets() {
+	public Set<AssetEntity> getAssets() {
 		return assets;
 	}
 
-	public void setAssets(List<AssetEntity> assets) {
+	public void setAssets(Set<AssetEntity> assets) {
 		this.assets = assets;
 	}
 

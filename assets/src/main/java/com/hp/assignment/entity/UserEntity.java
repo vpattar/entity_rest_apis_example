@@ -1,6 +1,7 @@
 package com.hp.assignment.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -35,7 +36,7 @@ public class UserEntity {
     private OrganizationEntity organization;
     
     @OneToMany(cascade=CascadeType.ALL, mappedBy="user")
-    private List<AssetEntity> assets;
+    private Set<AssetEntity> assets;
 
  	public UserEntity() {
     }
@@ -80,11 +81,11 @@ public class UserEntity {
 		this.id = id;
 	}
 
-	public List<AssetEntity> getAssets() {
+	public Set<AssetEntity> getAssets() {
 		return assets;
 	}
 
-	public void setAssets(List<AssetEntity> assets) {
+	public void setAssets(Set<AssetEntity> assets) {
 		this.assets = assets;
 	}
 
