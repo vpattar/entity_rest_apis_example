@@ -16,8 +16,11 @@ import com.hp.assignment.entity.UserEntity;
 public interface AssetsMapperUtility {
 
 	
-	// Can use mapper like dozer mapper, but since this is simple object doing it in code
-	public static AssetEntity fromAssetToEntity(Asset asset) {
+	/*
+	 * 	Multiple options here, like a generic mapper like modelmapper, or dozer mapper.
+	 *  Written this to kept it simple and fast.
+	 */
+	static AssetEntity fromAssetToEntity(Asset asset) {
 		AssetEntity entity = new AssetEntity();
 
 		entity.setId(asset.getId());
@@ -43,7 +46,7 @@ public interface AssetsMapperUtility {
 		return entity;
 	}
 	
-	public static Asset fromEntityToAsset(AssetEntity entity) {
+	static Asset fromEntityToAsset(AssetEntity entity) {
 		Asset asset = new Asset();
 		asset.setId(entity.getId());
 		asset.setName(entity.getName());
@@ -63,8 +66,7 @@ public interface AssetsMapperUtility {
 		return asset;
 	}
 
-	//TODO: Find a better way to do this
-	public static List<Asset> fromEntityToAsset(List<AssetEntity> assetEntities) {
+	static List<Asset> fromEntityToAsset(List<AssetEntity> assetEntities) {
 		List<Asset> assetsList = new LinkedList<Asset>();
 		assetEntities.forEach(entity->assetsList.add(fromEntityToAsset(entity)));
 		return assetsList;
