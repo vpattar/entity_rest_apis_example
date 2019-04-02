@@ -1,5 +1,8 @@
 package com.hp.assignment.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -29,8 +33,11 @@ public class UserEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "organization_id")
     private OrganizationEntity organization;
+    
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="user")
+    private List<AssetEntity> assets;
 
-    public UserEntity() {
+ 	public UserEntity() {
     }
  
     public String getFirst_name() {
@@ -73,4 +80,14 @@ public class UserEntity {
 		this.id = id;
 	}
 
+	public List<AssetEntity> getAssets() {
+		return assets;
+	}
+
+	public void setAssets(List<AssetEntity> assets) {
+		this.assets = assets;
+	}
+
+
+	
 }
