@@ -1,36 +1,26 @@
-package com.hp.assignment.entity;
+package com.hp.assignment.domain;
 
 import java.sql.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hp.assignment.common.AssetType;
+import com.hp.assignment.entity.AssetEntity;
+import com.hp.assignment.entity.OrganizationEntity;
+import com.hp.assignment.entity.UserEntity;
 
-@Entity
-@Table(name= "assets")
-public class AssetEntity {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AssetFullResponse {
+
     private Integer id;
-	
+    
 	@NotNull(message = "Name cannot be null")
     private String name;
-    
+	
 	@NotNull(message = "Brand cannot be null")
-	private String brand;
+    private String brand;
 	
 	@NotNull(message = "Model cannot be null")
     private String model;
@@ -39,7 +29,6 @@ public class AssetEntity {
     private String serial_number;
 	
 	@NotNull(message = "Type cannot be null")
-	@Enumerated(EnumType.STRING)
     private AssetType type;
 	
 	@NotNull(message = "Acquisition cannot be null")
@@ -47,30 +36,24 @@ public class AssetEntity {
 	
 	@NotNull(message = "Warranty Expiration cannot be null")
     private Date warranty_expiration;
+	
+	@JsonManagedReference
+	private Organization organization;
+	@JsonManagedReference
+	private User user;
+	@JsonManagedReference
+	private AssetFullResponse parentAsset;;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id")
-    private OrganizationEntity organization;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
-    
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "asset_id")
-    private AssetEntity parentAsset;
-
     @NotNull(message = "Retired cannot be null")
     private Boolean retired;
     
     @NotNull(message = "Cost cannot be null")
     private Integer cost;
+    
+    @JsonBackReference
+    private Set<AssetFullResponse> childAssets;
 
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="parentAsset")
-    private Set<AssetEntity> childAssets;
-
-    public AssetEntity() {
+    public AssetFullResponse() {
     }
 
 	public Integer getId() {
@@ -137,27 +120,28 @@ public class AssetEntity {
 		this.warranty_expiration = warranty_expiration;
 	}
 
-	public OrganizationEntity getOrganization() {
+	
+	public Organization getOrganization() {
 		return organization;
 	}
 
-	public void setOrganization(OrganizationEntity organization) {
+	public void setOrganization(Organization organization) {
 		this.organization = organization;
 	}
 
-	public UserEntity getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(UserEntity user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
-	public AssetEntity getParentAsset() {
+	public AssetFullResponse getParentAsset() {
 		return parentAsset;
 	}
 
-	public void setParentAsset(AssetEntity parentAsset) {
+	public void setParentAsset(AssetFullResponse parentAsset) {
 		this.parentAsset = parentAsset;
 	}
 
@@ -177,13 +161,14 @@ public class AssetEntity {
 		this.cost = cost;
 	}
 
-	public Set<AssetEntity> getChildAssets() {
+	public Set<AssetFullResponse> getChildAssets() {
 		return childAssets;
 	}
 
-	public void setChildAssets(Set<AssetEntity> childAssets) {
+	public void setChildAssets(Set<AssetFullResponse> childAssets) {
 		this.childAssets = childAssets;
 	}
+	
 	
 
 }

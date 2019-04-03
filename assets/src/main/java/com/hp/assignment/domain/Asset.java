@@ -4,6 +4,8 @@ import java.sql.Date;
 
 import javax.validation.constraints.NotNull;
 
+import com.hp.assignment.common.AssetType;
+
 public class Asset {
 
     private Integer id;
@@ -21,7 +23,7 @@ public class Asset {
     private String serial_number;
 	
 	@NotNull(message = "Type cannot be null")
-    private String type;
+    private AssetType type;
 	
 	@NotNull(message = "Acquisition cannot be null")
     private Date acquisition;
@@ -82,11 +84,11 @@ public class Asset {
 		this.serial_number = serial_number;
 	}
 
-	public String getType() {
+	public AssetType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(AssetType type) {
 		this.type = type;
 	}
 

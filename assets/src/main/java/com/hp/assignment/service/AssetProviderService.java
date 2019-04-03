@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.hp.assignment.domain.Asset;
+import com.hp.assignment.domain.AssetFullResponse;
 
 public interface AssetProviderService {
 
@@ -13,6 +14,6 @@ public interface AssetProviderService {
 	List<Asset> getAssets();
 	void editAssets(Asset asset);
 	void deleteAssetsById(Integer assetId);
-	Page<Asset> listAllByPage(Pageable pageable);
-	Page<Asset> listNameByPage(String name, Pageable pageable);
+	Page<AssetFullResponse> listAllByPage(Pageable pageable);
+	Page<AssetFullResponse> listNameByPage(String name, Pageable pageable);
 }

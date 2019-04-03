@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hp.assignment.service.AssetProviderService;
 import com.hp.assignment.custom.exception.InvalidInputException;
 import com.hp.assignment.domain.Asset;
+import com.hp.assignment.domain.AssetFullResponse;
 
 /**
  * Ideally the assets should have APIs under,
@@ -50,9 +51,9 @@ public class AssetsController {
 	 * @return
 	 */
     @RequestMapping(method=RequestMethod.GET)
-    ResponseEntity<Page<Asset>> listAssets(@RequestParam("name") String name, Pageable pageable){
-		Page<Asset> assets = assetProviderService.listNameByPage(name, pageable);
-		return new ResponseEntity<Page<Asset>> (assets, HttpStatus.OK);
+    ResponseEntity<Page<AssetFullResponse>> listAssets(@RequestParam("name") String name, Pageable pageable){
+		Page<AssetFullResponse> assets = assetProviderService.listNameByPage(name, pageable);
+		return new ResponseEntity<Page<AssetFullResponse>> (assets, HttpStatus.OK);
 	}
     
     

@@ -4,23 +4,32 @@ import java.util.LinkedList;
  
 import java.util.List;
 
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import com.hp.assignment.domain.Asset;
+import com.hp.assignment.domain.AssetFullResponse;
 import com.hp.assignment.entity.AssetEntity;
 import com.hp.assignment.entity.OrganizationEntity;
 import com.hp.assignment.entity.UserEntity;
 
-public interface AssetsMapperUtility {
+@Service
+public class AssetsMapperServiceImpl implements AssetsMapperService {
 
+//    @Autowired
+//    private Mapper mapper;
 	
 	/*
 	 * 	Multiple options here, like a generic mapper like modelmapper, or dozer mapper.
 	 *  Written this to kept it simple and fast.
 	 */
-	static AssetEntity fromAssetToEntity(Asset asset) {
+	@Override
+	public AssetEntity fromAssetToEntity(Asset asset) {
 		AssetEntity entity = new AssetEntity();
 
 		entity.setId(asset.getId());
@@ -46,7 +55,8 @@ public interface AssetsMapperUtility {
 		return entity;
 	}
 	
-	static Asset fromEntityToAsset(AssetEntity entity) {
+	@Override
+	public Asset fromEntityToAsset(AssetEntity entity) {
 		Asset asset = new Asset();
 		asset.setId(entity.getId());
 		asset.setName(entity.getName());
@@ -66,9 +76,18 @@ public interface AssetsMapperUtility {
 		return asset;
 	}
 
-	static List<Asset> fromEntityToAsset(List<AssetEntity> assetEntities) {
+	@Override
+	public List<Asset> fromEntityToAsset(List<AssetEntity> assetEntities) {
 		List<Asset> assetsList = new LinkedList<Asset>();
 		assetEntities.forEach(entity->assetsList.add(fromEntityToAsset(entity)));
+		return assetsList;
+	}
+	
+	@Override
+	public List<AssetFullResponse> fromEntityToAssetFullResponse(List<AssetEntity> assetEntities) {
+		List<AssetFullResponse> assetsList = new LinkedList<AssetFullResponse>();
+		DozerBeanMapper mapper = new DozerBeanMapper();
+		assetEntities.forEach(entity->assetsList.add(mapper.map(entity, AssetFullResponse.class)));
 		return assetsList;
 	}
 	
@@ -78,8 +97,10 @@ public interface AssetsMapperUtility {
      * @param source        The {@code Page<ENTITY>} object.
      * @return The created {@code Page<DTO>} object.
      */
-    static Page<Asset> mapEntityPageIntoDTOPage(Pageable pageRequest, Page<AssetEntity> source) {
-        List<Asset> dtos = fromEntityToAsset(source.getContent());
+    
+    @Override
+	public Page<AssetFullResponse> mapEntityPageIntoDTOPage(Pageable pageRequest, Page<AssetEntity> source) {
+        List<AssetFullResponse> dtos = fromEntityToAssetFullResponse(source.getContent());
         return new PageImpl<>(dtos, pageRequest, source.getTotalElements());
     }
 }
