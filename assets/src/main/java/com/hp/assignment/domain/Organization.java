@@ -1,21 +1,27 @@
 package com.hp.assignment.domain;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.hp.assignment.entity.AssetEntity;
-import com.hp.assignment.entity.UserEntity;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-public class Organization {
-    private Integer id;
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="id")
+public class Organization implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4624759285241581182L;
+	private Integer id;
     private String name;
     private String address;
     
     @JsonBackReference
-    private Set<UserEntity> users;
+    private Set<User> users;
     
     @JsonBackReference
-    private Set<AssetEntity> assets;
+    private Set<AssetFullResponse> assets;
     public Organization() {
     }
 
@@ -43,19 +49,19 @@ public class Organization {
 		this.address = address;
 	}
 
-	public Set<UserEntity> getUsers() {
+	public Set<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(Set<UserEntity> users) {
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 
-	public Set<AssetEntity> getAssets() {
+	public Set<AssetFullResponse> getAssets() {
 		return assets;
 	}
 
-	public void setAssets(Set<AssetEntity> assets) {
+	public void setAssets(Set<AssetFullResponse> assets) {
 		this.assets = assets;
 	}
 	

@@ -1,8 +1,5 @@
 package com.hp.assignment.controller;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hp.assignment.service.AssetProviderService;
@@ -64,13 +60,13 @@ public class AssetsController {
      *  		Ideally should have been through controller advice, but keeping it simple. 
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<HttpStatus> addAssets(@RequestBody Asset asset) throws Exception {
+    public ResponseEntity<Asset> addAssets(@RequestBody Asset asset) throws Exception {
     	if (asset.getId() != null) {
     		throw new InvalidInputException("Id is not required to be set");
     	}
         this.assetProviderService.addAsset(asset);
         
-        return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
+        return new ResponseEntity<Asset>(HttpStatus.CREATED);
     }
      /**
       * 
@@ -83,6 +79,7 @@ public class AssetsController {
     	if (asset.getId() == null) {
     		throw new InvalidInputException("Id is required for edit");
     	}
+
         this.assetProviderService.addAsset(asset);
         
         return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);

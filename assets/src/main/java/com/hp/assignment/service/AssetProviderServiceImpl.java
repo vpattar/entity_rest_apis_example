@@ -1,7 +1,5 @@
 package com.hp.assignment.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,12 +22,7 @@ public class AssetProviderServiceImpl implements AssetProviderService {
 	public void addAsset(Asset asset) {
 		this.asDao.save(assetsMapperService.fromAssetToEntity(asset));		
 	}
-	
-	@Override
-	public List<Asset> getAssets() {
-		return assetsMapperService.fromEntityToAsset(this.asDao.findAll());
-	}
-	
+
 	@Override
 	public void editAssets(Asset asset) {
 		this.asDao.save(assetsMapperService.fromAssetToEntity(asset));

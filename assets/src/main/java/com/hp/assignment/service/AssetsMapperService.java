@@ -17,10 +17,6 @@ public interface AssetsMapperService {
 	 */
 	AssetEntity fromAssetToEntity(Asset asset);
 
-	Asset fromEntityToAsset(AssetEntity entity);
-
-	List<Asset> fromEntityToAsset(List<AssetEntity> assetEntities);
-
 	List<AssetFullResponse> fromEntityToAssetFullResponse(List<AssetEntity> assetEntities);
 
 	/**
@@ -31,5 +27,7 @@ public interface AssetsMapperService {
 	 */
 
 	Page<AssetFullResponse> mapEntityPageIntoDTOPage(Pageable pageRequest, Page<AssetEntity> source);
+
+	AssetEntity fromAssetFullResponseToEntity(AssetFullResponse asset);
 
 }

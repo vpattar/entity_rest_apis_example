@@ -3,9 +3,11 @@ package com.hp.assignment.domain;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.hp.assignment.entity.AssetEntity;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="id")
 public class User {
     private Integer id;
     private String first_name;
@@ -16,7 +18,7 @@ public class User {
     private Organization organization;
     
     @JsonBackReference
-    private Set<AssetEntity> assets;
+    private Set<AssetFullResponse> assets;
 
 	public User() {
     }
@@ -61,11 +63,11 @@ public class User {
 		this.id = id;
 	}
 	
-    public Set<AssetEntity> getAssets() {
+    public Set<AssetFullResponse> getAssets() {
 		return assets;
 	}
 
-	public void setAssets(Set<AssetEntity> assets) {
+	public void setAssets(Set<AssetFullResponse> assets) {
 		this.assets = assets;
 	}
 

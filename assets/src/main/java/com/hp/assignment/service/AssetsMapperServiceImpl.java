@@ -5,8 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -20,9 +18,6 @@ import com.hp.assignment.entity.UserEntity;
 
 @Service
 public class AssetsMapperServiceImpl implements AssetsMapperService {
-
-//    @Autowired
-//    private Mapper mapper;
 	
 	/*
 	 * 	Multiple options here, like a generic mapper like modelmapper, or dozer mapper.
@@ -56,32 +51,11 @@ public class AssetsMapperServiceImpl implements AssetsMapperService {
 	}
 	
 	@Override
-	public Asset fromEntityToAsset(AssetEntity entity) {
-		Asset asset = new Asset();
-		asset.setId(entity.getId());
-		asset.setName(entity.getName());
-		asset.setBrand(entity.getBrand());
-		asset.setModel(entity.getModel());
-		asset.setSerial_number(entity.getSerial_number());
-		asset.setType(entity.getType());
-		asset.setAcquisition(entity.getAcquisition());
-		asset.setWarranty_expiration(entity.getWarranty_expiration());
-		asset.setOwner_id(entity.getParentAsset().getId());
-		asset.setUser_id(entity.getUser().getId());
-		asset.setAsset_id(entity.getOrganization().getId());
-		asset.setRetired(entity.getRetired());
-		asset.setCost(entity.getCost());
-
-		
-		return asset;
+	public AssetEntity fromAssetFullResponseToEntity(AssetFullResponse asset) {
+		DozerBeanMapper mapper = new DozerBeanMapper();
+		return mapper.map(asset, AssetEntity.class);
 	}
-
-	@Override
-	public List<Asset> fromEntityToAsset(List<AssetEntity> assetEntities) {
-		List<Asset> assetsList = new LinkedList<Asset>();
-		assetEntities.forEach(entity->assetsList.add(fromEntityToAsset(entity)));
-		return assetsList;
-	}
+	
 	
 	@Override
 	public List<AssetFullResponse> fromEntityToAssetFullResponse(List<AssetEntity> assetEntities) {

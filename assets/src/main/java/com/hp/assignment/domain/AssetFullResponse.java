@@ -6,12 +6,12 @@ import java.util.Set;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hp.assignment.common.AssetType;
-import com.hp.assignment.entity.AssetEntity;
-import com.hp.assignment.entity.OrganizationEntity;
-import com.hp.assignment.entity.UserEntity;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class AssetFullResponse {
 
     private Integer id;
