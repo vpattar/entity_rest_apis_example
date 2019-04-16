@@ -15,40 +15,102 @@
  */
 package com.hp.assignment.service;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.sql.Date;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
+import com.hp.assignment.common.AssetType;
+import com.hp.assignment.dao.AssetRepository;
+import com.hp.assignment.domain.Asset;
+import com.hp.assignment.entity.AssetEntity;
+import com.hp.assignment.entity.OrganizationEntity;
+import com.hp.assignment.entity.UserEntity;
+
+@RunWith(MockitoJUnitRunner.class)
 public class AssetProviderServiceTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+    @Mock
+    private AssetsMapperService assetsMapperService;
+    
+    @Mock
+    private AssetRepository asDao;
+    
+    @InjectMocks
+    private AssetProviderServiceImpl assetProviderService;
+    
+    private Asset asset;
+    
+    private AssetEntity assetEntity;
 
-    @Test
-    public void addAssetShouldCallAsDaoSave() throws Exception {
-
-        this.mockMvc.perform(get("/greeting")).andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").value("Hello, World!"));
+    @Before
+    public void setUp(){
+    	asset = new Asset();
+    	asset.setAcquisition(new Date(new java.util.Date().getTime()));
+    	asset.setAsset_id(0);
+    	asset.setBrand("Nimble");
+    	asset.setCost(10000);
+    	asset.setId(1);
+    	asset.setModel("Director Special");
+    	asset.setName("HCI");
+    	asset.setOwner_id(2);
+    	asset.setRetired(false);
+    	asset.setSerial_number("2344");
+    	asset.setType(AssetType.compute);
+    	asset.setUser_id(1);
+    	asset.setWarranty_expiration(new Date(new java.util.Date().getTime()));
+    	
+    	assetEntity = new AssetEntity();
+    	assetEntity.setAcquisition(new Date(new java.util.Date().getTime()));
+    	AssetEntity parentAsset = new AssetEntity();
+    	parentAsset.setId(0);
+    	assetEntity.setParentAsset(parentAsset); 
+    	assetEntity.setBrand("Nimble");
+    	assetEntity.setCost(10000);
+    	assetEntity.setId(1);
+    	assetEntity.setModel("Director Special");
+    	assetEntity.setName("HCI");
+    	OrganizationEntity orEntity = new OrganizationEntity();
+    	orEntity.setId(2);
+    	assetEntity.setOrganization(orEntity);
+    	assetEntity.setRetired(false);
+    	assetEntity.setSerial_number("2344");
+    	assetEntity.setType(AssetType.compute);
+    	UserEntity usEntity = new UserEntity();
+    	usEntity.setId(1);
+    	assetEntity.setUser(usEntity);
+    	assetEntity.setWarranty_expiration(new Date(new java.util.Date().getTime()));
+    	
     }
 
     @Test
-    public void paramGreetingShouldReturnTailoredMessage() throws Exception {
-
-        this.mockMvc.perform(get("/greeting").param("name", "Spring Community"))
-                .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").value("Hello, Spring Community!"));
+    public void addAssetShouldCallAsDaoSave() throws Exception {
+    	when(assetsMapperService.fromAssetToEntity(asset)).thenReturn(assetEntity);
+    	assetProviderService.addAsset(asset);
+    	verify(asDao, times(1)).save(assetEntity);
+    }
+    
+    @Test
+    public void addAssetShouldCallFromAssetToEntity() throws Exception {
+    	assetProviderService.addAsset(asset);
+    	verify(assetsMapperService, times(1)).fromAssetToEntity(asset);
     }
 
 }
