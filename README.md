@@ -1,5 +1,5 @@
-## hp_assignment
-This is a sample assignment that provides APIs for CRUD operations on table.
+## entity_rest_apis_example
+This is a sample  that provides APIs for CRUD operations on table.
 
 ## To Be Done:
 * ### Remodel POST, PUT calls to reuse the assets data structure used for GET.
